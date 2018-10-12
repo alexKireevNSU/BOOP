@@ -36,6 +36,12 @@ TEST(Operators, skobonki) {
 	}
 }
 
+TEST(Operators, const_scobonki) {
+	const RNK rnk(G, 5000000);
+	for (int i = 0; i < 5000000; i++) {
+		EXPECT_EQ(G, rnk[i]);
+	}
+}
 
 TEST(Methods, push_back) {
 	RNK rnk(1, T);
@@ -183,11 +189,21 @@ TEST(Methods, cardinality) {
 		rnk1.push_back(C);
 		rnk1.push_back(T);
 	}
+
+
+
 	unordered_map<Nucleotide, size_t> map = rnk1.cardinality();
 	EXPECT_EQ(map[A], 125000);
 	EXPECT_EQ(map[G], 125000);
 	EXPECT_EQ(map[C], 125000);
 	EXPECT_EQ(map[T], 125000);
+}
+
+TEST(Operator, get_from_empty) {
+	RNK rnk;
+	for (int i = -2000; i < 2000; i++) {
+		EXPECT_ANY_THROW(rnk[i]);
+	}
 }
 
 int main(int argc, char **argv) {

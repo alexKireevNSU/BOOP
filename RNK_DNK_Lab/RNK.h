@@ -15,7 +15,10 @@ namespace biology_lib {
 	class RNK {
 	private:
 		size_t* chain = nullptr;
+		size_t chain_length = 0;
 		size_t length = 0;
+
+
 
 		class Iterator {
 		private:
@@ -99,8 +102,6 @@ namespace biology_lib {
 			return result_rnk;
 		};
 	};
-
-	
 
 	struct RNKS {
 		RNK *first;
