@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <gtest/gtest.h>
 using namespace std;
-
+using namespace biology_lib;
 TEST(Mem, push_back) {
 
 	_CrtMemState stady1 = { 0 };
@@ -191,7 +191,6 @@ TEST(Methods, cardinality) {
 }
 
 int main(int argc, char **argv) {
-
 	::testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
 

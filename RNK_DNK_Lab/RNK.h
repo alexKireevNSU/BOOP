@@ -2,97 +2,109 @@
 #include <iostream>
 #include <unordered_map>
 
-const size_t nucs_in_element = (sizeof(size_t) * 4);
+namespace biology_lib {
 
-enum Nucleotide : unsigned char {
-	A, G, C, T
-};
+	const size_t nucs_in_element = (sizeof(size_t) * 4);
 
-struct RNKS;
-
-class RNK {
-private:
-	size_t* chain = nullptr;
-	size_t length = 0;
-
-	class Iterator {
-	private:
-		size_t index;
-		size_t nuc_index;
-		size_t shift;
-		const RNK* rnk;
-	public:
-		Nucleotide operator=(Nucleotide N) {
-			rnk->chain[nuc_index] = ((rnk->chain[(index / nucs_in_element)]) & (~(size_t)(3 << shift))) | (N << shift);
-			return (Nucleotide)((rnk->chain[nuc_index] & ((size_t)(3 << shift))) >> shift);
-		}
-
-		operator Nucleotide() const {
-			return (Nucleotide)((rnk->chain[nuc_index] & ((size_t)(3 << shift))) >> shift);
-		}
-
-		Iterator(const RNK* rnk, size_t index) {
-			this->rnk = rnk;
-			this->index = index;
-			this->nuc_index = index / nucs_in_element;
-			this->shift = (size_t)((sizeof(size_t) * 8) - 2 - (index % nucs_in_element) * 2);
-		}
-
-		~Iterator() {
-			rnk = nullptr;
-		}
+	enum Nucleotide : unsigned char {
+		A, G, C, T
 	};
 
-public:
+	struct RNKS;
 
-	RNK(Nucleotide N, std::size_t length);
+	class RNK {
+	private:
+		size_t* chain = nullptr;
+		size_t length = 0;
 
-	RNK(std::size_t length, Nucleotide N...);
+		class Iterator {
+		private:
+			size_t index;
+			size_t nuc_index;
+			size_t shift;
+			const RNK* rnk;
+		public:
+			Nucleotide operator=(Nucleotide N) {
+				rnk->chain[nuc_index] = ((rnk->chain[(index / nucs_in_element)]) & (~(size_t)(3 << shift))) | (N << shift);
+				return (Nucleotide)((rnk->chain[nuc_index] & ((size_t)(3 << shift))) >> shift);
+			}
 
-	RNK(const RNK& rnk);
+			operator Nucleotide() const {
+				return (Nucleotide)((rnk->chain[nuc_index] & ((size_t)(3 << shift))) >> shift);
+			}
 
-	RNK(size_t length);
+			Iterator(const RNK* rnk, size_t index) {
+				this->rnk = rnk;
+				this->index = index;
+				this->nuc_index = index / nucs_in_element;
+				this->shift = (size_t)((sizeof(size_t) * 8) - 2 - (index % nucs_in_element) * 2);
+			}
 
-	RNK();
+			~Iterator() {
+				rnk = nullptr;
+			}
+		};
 
-	~RNK();
+	public:
 
-	const Iterator operator[](size_t i) const;
+		RNK(Nucleotide N, std::size_t length);
 
-	Iterator operator[](size_t i);
+		RNK(std::size_t length, Nucleotide N...);
 
-	std::size_t get_length() const;
+		RNK(const RNK& rnk);
 
-	Nucleotide get(size_t i) const;
+		RNK(size_t length);
 
-	void reverse();
+		RNK();
 
-	void push_back(Nucleotide N);
+		~RNK();
 
-	void push_back(std::size_t length, Nucleotide N...);
+		const Iterator operator[](size_t i) const;
 
-	RNKS split(size_t index);
+		Iterator operator[](size_t i);
 
-	void trim(size_t index);
+		std::size_t get_length() const;
 
-	size_t cardinality(Nucleotide N);
+		Nucleotide get(size_t i) const;
 
-	std::unordered_map<Nucleotide, size_t> cardinality();
+		void reverse();
 
-	bool operator==(RNK);
+		void push_back(Nucleotide N);
 
-	bool operator!=(RNK&);
+		void push_back(std::size_t length, Nucleotide N...);
 
-	RNK operator!();
+		RNKS split(size_t index);
 
-	RNK& operator=(const RNK&);
+		void trim(size_t index);
 
-	bool is_complimentary(RNK&);
-};
+		size_t cardinality(Nucleotide N);
 
-RNK operator+(RNK r, RNK l);
+		std::unordered_map<Nucleotide, size_t> cardinality();
 
-struct RNKS {
-	RNK *first;
-	RNK *second;
-};
+		bool operator==(RNK);
+
+		bool operator!=(RNK&);
+
+		RNK operator!();
+
+		RNK& operator=(const RNK&);
+
+		bool is_complimentary(RNK&);
+
+		RNK operator+(const RNK& r) {
+			RNK result_rnk(*this);
+			for (auto i = 0; i < r.get_length(); i++) {
+				result_rnk.push_back((Nucleotide)r[i]);
+			}
+			return result_rnk;
+		};
+	};
+
+	
+
+	struct RNKS {
+		RNK *first;
+		RNK *second;
+	};
+
+}

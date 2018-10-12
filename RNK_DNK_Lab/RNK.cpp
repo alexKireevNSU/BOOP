@@ -1,7 +1,7 @@
 #include "RNK.h"
 using namespace std;
 
-RNK::RNK(Nucleotide N, size_t length) {
+biology_lib::RNK::RNK(Nucleotide N, size_t length) {
 
 	chain = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
 	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
@@ -14,7 +14,7 @@ RNK::RNK(Nucleotide N, size_t length) {
 	}
 }
 
-RNK::RNK(size_t length, Nucleotide N...) {
+biology_lib::RNK::RNK(size_t length, Nucleotide N...) {
 	size_t* chain_t;
 	chain_t = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
 	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
@@ -30,7 +30,7 @@ RNK::RNK(size_t length, Nucleotide N...) {
 	this->length = length;
 }
 
-RNK::RNK(size_t length) {
+biology_lib::RNK::RNK(size_t length) {
 	size_t* chain_t;
 	chain_t = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
 	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
@@ -40,27 +40,27 @@ RNK::RNK(size_t length) {
 	this->length = length;
 }
 
-RNK::RNK() {
+biology_lib::RNK::RNK() {
 	this->chain = nullptr;
 	this->length = 0;
 }
 
-RNK::~RNK() {
+biology_lib::RNK::~RNK() {
 	if (chain) {
 		delete[] chain;
 		chain = nullptr;
 	}
 }
 
-size_t RNK::get_length() const {
+size_t biology_lib::RNK::get_length() const {
 	return length;
 }
 
-Nucleotide RNK::get(size_t i) const {
+biology_lib::Nucleotide biology_lib::RNK::get(size_t i) const {
 	return (*this)[i];
 }
 
-void RNK::reverse() {
+void biology_lib::RNK::reverse() {
 
 	if (chain == nullptr) throw exception("Chain is nullptr!");
 
@@ -72,7 +72,7 @@ void RNK::reverse() {
 
 }
 
-void RNK::push_back(Nucleotide N) {
+void biology_lib::RNK::push_back(Nucleotide N) {
 	size_t length = this->length + 1;
 
 	if (!this->chain) {
@@ -105,7 +105,7 @@ void RNK::push_back(Nucleotide N) {
 
 }
 
-void RNK::push_back(size_t length, Nucleotide N...) {
+void biology_lib::RNK::push_back(size_t length, Nucleotide N...) {
 	Nucleotide* p_arg = (&N);
 	size_t* chain_t = new size_t[((this->length + length) / nucs_in_element) + ((this->length + length) % nucs_in_element >= 1)];
 	for (int i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
@@ -139,7 +139,7 @@ void RNK::push_back(size_t length, Nucleotide N...) {
 
 }
 
-void RNK::trim(size_t index) {
+void biology_lib::RNK::trim(size_t index) {
 	size_t result_chain_length = ((this->length - index) / nucs_in_element) + ((this->length - index) % nucs_in_element >= 1);
 
 	size_t* buff = new size_t[index + 1];
@@ -152,7 +152,7 @@ void RNK::trim(size_t index) {
 	this->length = index;
 }
 
-RNKS RNK::split(size_t index) {
+biology_lib::RNKS biology_lib::RNK::split(size_t index) {
 	RNKS rnks;
 	RNK* second = new RNK(A, this->length - index);
 	for (auto i = 0; i < this->length - index; i++) {
@@ -164,7 +164,7 @@ RNKS RNK::split(size_t index) {
 	return rnks;
 }
 
-size_t RNK::cardinality(Nucleotide N) {
+size_t biology_lib::RNK::cardinality(Nucleotide N) {
 	size_t counter = 0;
 	for (auto i = 0; i < this->length; i++) {
 		N == (*this)[i] ? counter++ : 0;
@@ -172,7 +172,7 @@ size_t RNK::cardinality(Nucleotide N) {
 	return counter;
 }
 
-std::unordered_map<Nucleotide, size_t> RNK::cardinality() {
+std::unordered_map<biology_lib::Nucleotide, size_t> biology_lib::RNK::cardinality() {
 	std::unordered_map<Nucleotide, size_t> map;
 	map[A] = cardinality(A);
 	map[G] = cardinality(G);
@@ -181,17 +181,17 @@ std::unordered_map<Nucleotide, size_t> RNK::cardinality() {
 	return map;
 }
 
-const RNK::Iterator RNK::operator[](size_t i) const {
+const biology_lib::RNK::Iterator biology_lib::RNK::operator[](size_t i) const {
 	if (i >= this->length || i < 0) throw std::exception("Out of range");
 	return Iterator(this, i);
 }
 
-RNK::Iterator RNK::operator[](size_t i){
+biology_lib::RNK::Iterator biology_lib::RNK::operator[](size_t i){
 	if (i >= this->length || i < 0) throw std::exception("Out of range");
 	return Iterator(this, i);
 }
 
-bool RNK::operator==(RNK r) {
+bool biology_lib::RNK::operator==(RNK r) {
 	if (this->get_length() != r.get_length()) return false;
 	bool result = true;
 	for (auto i = 0; i < r.get_length(); ++i)
@@ -208,26 +208,26 @@ bool RNK::operator==(RNK r) {
 	return (result || reversed_result);
 }
 
-bool RNK::operator!=(RNK &r) {
+bool biology_lib::RNK::operator!=(RNK &r) {
 	return !((*this) == r);
 }
 
-Nucleotide get_comp_nucl(Nucleotide N) {
+biology_lib::Nucleotide get_comp_nucl(biology_lib::Nucleotide N) {
 	switch (N)
 	{
-	case A:
-		return T;
-	case G:
-		return C;
-	case C:
-		return G;
-	case T:
-		return A;
+	case biology_lib::A:
+		return biology_lib::T;
+	case biology_lib::G:
+		return biology_lib::C;
+	case biology_lib::C:
+		return biology_lib::G;
+	case biology_lib::T:
+		return biology_lib::A;
 	}
-	return A;
+	return biology_lib::A;
 }
 
-RNK::RNK(const RNK& rnk) {
+biology_lib::RNK::RNK(const RNK& rnk) {
 	this->length = rnk.length;
 	size_t* chain_t = new size_t[rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1)];
 	for (auto i = 0; i < rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1); i++) {
@@ -241,7 +241,7 @@ RNK::RNK(const RNK& rnk) {
 
 }
 
-RNK RNK::operator!() {
+biology_lib::RNK biology_lib::RNK::operator!() {
 	RNK result_rnk(*this);
 	for (auto i = 0; i < this->get_length(); ++i) {
 		(result_rnk)[i] = (get_comp_nucl((Nucleotide)(*this)[i]));
@@ -249,15 +249,7 @@ RNK RNK::operator!() {
 	return result_rnk;
 }
 
-RNK operator+(RNK l, RNK r) {
-	RNK result_rnk(l);
-	for (auto i = 0; i < r.get_length(); i++) {
-		result_rnk.push_back((Nucleotide)r[i]);
-	}
-	return result_rnk;
-}
-
-RNK& RNK::operator=(const RNK& rnk) {
+biology_lib::RNK& biology_lib::RNK::operator=(const RNK& rnk) {
 	this->length = rnk.length;
 	size_t* chain_t = new size_t[rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1)];
 	for (auto i = 0; i < rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1); i++) {
@@ -271,7 +263,7 @@ RNK& RNK::operator=(const RNK& rnk) {
 	return *this;
 }
 
-bool RNK::is_complimentary(RNK& r) {
+bool biology_lib::RNK::is_complimentary(RNK& r) {
 	if (this->length != r.length) return false;
 	bool result = true;
 	for (auto i = 0; i < this->length; i++) {

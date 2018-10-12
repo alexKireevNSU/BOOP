@@ -1,10 +1,9 @@
 #pragma once
 #include "RNK.h"
 #include <exception>
-
 class DNK {
 public:
-	RNK rnk1;
-	RNK rnk2;
-	DNK(RNK&, RNK&);
+	biology_lib::RNK rnk1;
+	biology_lib::RNK rnk2;
+	DNK(biology_lib::RNK&, biology_lib::RNK&);
 };
