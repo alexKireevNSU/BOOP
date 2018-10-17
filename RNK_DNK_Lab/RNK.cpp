@@ -2,9 +2,10 @@
 using namespace std;
 
 biology_lib::RNK::RNK(Nucleotide N, size_t length) {
+	this->chain_length = (length / nucs_in_element) + (length % nucs_in_element >= 1);
 
-	chain = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
-	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
+	chain = new size_t[chain_length];
+	for (auto i = 0; i < chain_length; ++i) {
 		chain[i] = 0;
 	}
 	this->length = length;
@@ -16,8 +17,10 @@ biology_lib::RNK::RNK(Nucleotide N, size_t length) {
 
 biology_lib::RNK::RNK(size_t length, Nucleotide N...) {
 	size_t* chain_t;
-	chain_t = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
-	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
+	this->chain_length = (length / nucs_in_element) + (length % nucs_in_element >= 1);
+
+	chain_t = new size_t[chain_length];
+	for (auto i = 0; i < chain_length; ++i) {
 		chain_t[i] = 0;
 	}
 	Nucleotide* N_ptr = &N;
@@ -25,24 +28,28 @@ biology_lib::RNK::RNK(size_t length, Nucleotide N...) {
 		chain_t[i / nucs_in_element] |= (size_t)((*N_ptr) << (size_t)(nucs_in_element * 2 - 2 - 2 * (i % nucs_in_element)));
 		N_ptr += sizeof(Nucleotide*);
 	}
-
+	
 	this->chain = chain_t;
 	this->length = length;
 }
 
 biology_lib::RNK::RNK(size_t length) {
 	size_t* chain_t;
+	this->chain_length = (length / nucs_in_element) + (length % nucs_in_element >= 1);
+
 	chain_t = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
 	for (auto i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i) {
 		chain_t[i] = 0;
 	}
 	this->chain = chain_t;
 	this->length = length;
+	
 }
 
 biology_lib::RNK::RNK() {
 	this->chain = nullptr;
 	this->length = 0;
+	this->chain_length = 0;
 }
 
 biology_lib::RNK::~RNK() {
@@ -73,36 +80,32 @@ void biology_lib::RNK::reverse() {
 }
 
 void biology_lib::RNK::push_back(Nucleotide N) {
-	size_t length = this->length + 1;
-
-	if (!this->chain) {
-		size_t* chain = new size_t[1];
-		chain[0] = N << ((sizeof(size_t) * 8) - 2 - (2 * (this->length % nucs_in_element)));
-		this->chain = chain;
-		this->length = length;
+	size_t new_length = this->length + 1;
+	/*if (!this->chain) {
+		this->chain = new size_t[1];
+		this->chain[0] = 0;
+		(*this)[0] = N;
+		this->length = 1;
+		this->chain_length = 1;
 		return;
 	}
-
-	if (this->get_length() % nucs_in_element == 0) {
-		size_t* chain = new size_t[(length / nucs_in_element) + (length % nucs_in_element >= 1)];
-		for (int i = 0; i < (length / nucs_in_element) + (length % nucs_in_element >= 1); ++i)
-			chain[i] = 0;
-
-		if (this->length != 0) {
-			for (int i = 0; i < (this->length / nucs_in_element) + (this->length % nucs_in_element >= 1); i++)
-				chain[i] = this->chain[i];
+	if (new_length / nucs_in_element - (new_length%nucs_in_element >= 1) >= this->chain_length) {
+		size_t *new_chain = new size_t[this->chain_length * 2];
+		for (auto i = 0; i < this->chain_length*2; ++i)
+			new_chain[i] = 0;
+		for (auto i = 0; i < this->chain_length; i++) {
+			new_chain[i] = this->chain[i];
 		}
-		chain[length / nucs_in_element] |= N << ((sizeof(size_t) * 8) - 2 - (2 * (this->length % nucs_in_element)));
-
 		delete[] this->chain;
-		this->chain = chain;
+		this->chain = new_chain;
+		this->chain_length = this->chain_length * 2;
+	}*/
+	if (new_length / nucs_in_element + (new_length%nucs_in_element >= 1) > this->chain_length) {
+		this->resize_chain();
 	}
-	else {
-		this->chain[this->length / nucs_in_element] |= N << ((sizeof(size_t) * 8) - 2 - (2 * (this->length % nucs_in_element)));
-	}
-	this->length = length;
 
-
+	this->length = new_length;
+	(*this)[this->length-1] = N;
 }
 
 void biology_lib::RNK::push_back(size_t length, Nucleotide N...) {
@@ -229,11 +232,14 @@ biology_lib::Nucleotide get_comp_nucl(biology_lib::Nucleotide N) {
 
 biology_lib::RNK::RNK(const RNK& rnk) {
 	this->length = rnk.length;
-	size_t* chain_t = new size_t[rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1)];
-	for (auto i = 0; i < rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1); i++) {
+	this->chain_length = (rnk.chain_length);
+	size_t* chain_t = new size_t[rnk.chain_length];
+
+	//size_t* chain_t = new size_t[this->chain_length];
+	for (auto i = 0; i < rnk.chain_length; i++) {
 		chain_t[i] = 0;
 	}
-	for (auto i = 0; i < rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1); i++) {
+	for (auto i = 0; i < rnk.chain_length; i++) {
 		chain_t[i] = rnk.chain[i];
 	}
 	if (this->chain != nullptr) delete[] this->chain;
@@ -251,6 +257,7 @@ biology_lib::RNK biology_lib::RNK::operator!() {
 
 biology_lib::RNK& biology_lib::RNK::operator=(const RNK& rnk) {
 	this->length = rnk.length;
+	this->chain_length = rnk.chain_length;
 	size_t* chain_t = new size_t[rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1)];
 	for (auto i = 0; i < rnk.length / nucs_in_element + (rnk.length % nucs_in_element >= 1); i++) {
 		chain_t[i] = 0;

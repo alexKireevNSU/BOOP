@@ -16,6 +16,7 @@ namespace biology_lib {
 	private:
 		size_t* chain = nullptr;
 		size_t chain_length = 0;
+
 		size_t length = 0;
 
 
@@ -94,10 +95,32 @@ namespace biology_lib {
 
 		bool is_complimentary(RNK&);
 
+		void resize_chain() {
+			if (!this->chain) {
+				this->chain = new size_t[1];
+				this->chain[0] = 0;
+				this->length = 1;
+				this->chain_length = 1;
+				return;
+			}
+			else {
+				size_t *new_chain = new size_t[this->chain_length * 2];
+				for (auto i = 0; i < this->chain_length * 2; ++i)
+					new_chain[i] = 0;
+				for (auto i = 0; i < this->chain_length; i++) {
+					new_chain[i] = this->chain[i];
+				}
+				delete[] this->chain;
+				this->chain = new_chain;
+				this->chain_length = this->chain_length * 2;
+			}
+		}
+
 		RNK operator+(const RNK& r) {
 			RNK result_rnk(*this);
+			//std::cout << result_rnk.get_length() << std::endl << result_rnk.chain_length << std::endl << this->length << std::endl << this->chain_length;
 			for (auto i = 0; i < r.get_length(); i++) {
-				result_rnk.push_back((Nucleotide)r[i]);
+ 				result_rnk.push_back((Nucleotide)r[i]);
 			}
 			return result_rnk;
 		};

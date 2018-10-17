@@ -13,11 +13,15 @@ TEST(Mem, push_back) {
 	_CrtMemCheckpoint(&stady1);
 
 	RNK* rnk = new RNK(1, T);
-	for (int i = 0; i < 500000; i++) {
+	RNK* rnk1 = new RNK(1, T);
+	for (int i = 0; i < 5000000; i++) {
 		rnk->push_back(T);
+		rnk1->push_back(T);
 	}
-
+	RNK* rnk3 = new RNK((*rnk) + *rnk1);
 	delete rnk;
+	delete rnk1;
+	delete rnk3;
 
 	_CrtMemCheckpoint(&stady2);
 
@@ -45,11 +49,11 @@ TEST(Operators, const_scobonki) {
 
 TEST(Methods, push_back) {
 	RNK rnk(1, T);
-	for (int i = 0; i < 500000; i++) {
+	for (int i = 0; i < 5000000; i++) {
 		rnk.push_back(T);
 	}
 	
-	for (int i = 0; i < 500000; i++) {
+	for (int i = 0; i < 5000000; i++) {
 		EXPECT_EQ(T, rnk[i]);
 	}
 }
@@ -68,7 +72,7 @@ TEST(Operators, eq) {
 
 TEST(Methods, reverse) {
 	RNK rnk(1, A);
-	for (int i = 0; i < 500000/4; i+=4) {
+	for (int i = 0; i < 5000000/4; i+=4) {
 		rnk.push_back(A);
 		rnk.push_back(G);
 		rnk.push_back(C);
@@ -77,7 +81,7 @@ TEST(Methods, reverse) {
 
 	rnk.reverse();
 
-	for (int i = 0; i < 500000 / 4; i += 4) {
+	for (int i = 0; i < 5000000 / 4; i += 4) {
 		EXPECT_EQ(rnk[i], T);
 		EXPECT_EQ(rnk[i+1], C);
 		EXPECT_EQ(rnk[i+2], G);
@@ -89,7 +93,7 @@ TEST(Methods, reverse) {
 TEST(Operators, plus) {
 	RNK rnk1(1, A);
 	RNK rnk2(1, A);
-	for (int i = 0; i < 500000; i += 4) {
+	for (int i = 0; i < 5000000; i += 4) {
 		rnk1.push_back(A);
 		rnk1.push_back(G);
 		rnk1.push_back(C);
@@ -100,21 +104,19 @@ TEST(Operators, plus) {
 		rnk2.push_back(T);
 	}
 
-	RNK rnk = rnk1 + rnk2;
-
-	EXPECT_EQ(rnk.get_length(), 1000002);
+	EXPECT_EQ((rnk1 + rnk2).get_length(), 10000002);
 }
 
 TEST(Operators, NOT) {
 	RNK rnk1;
-	for (int i = 0; i < 500000; i += 4) {
+	for (int i = 0; i < 5000000; i += 4) {
 		rnk1.push_back(A);
 		rnk1.push_back(G);
 		rnk1.push_back(C);
 		rnk1.push_back(T);
 	}
 	rnk1 = !rnk1;
-	for (int i = 0; i < 500000; i += 4) {
+	for (int i = 0; i < 5000000; i += 4) {
 		EXPECT_EQ(rnk1[i], T);
 		EXPECT_EQ(rnk1[i + 1], C);
 		EXPECT_EQ(rnk1[i + 2], G);
@@ -169,37 +171,35 @@ TEST(Methods, split) {
 
 TEST(Methods, cardinalityN) {
 	RNK rnk1;
-	for (int i = 0; i < 500000; i += 4) {
+	for (int i = 0; i < 5000000; i += 4) {
 		rnk1.push_back(A);
 		rnk1.push_back(G);
 		rnk1.push_back(C);
 		rnk1.push_back(T);
 	}
-	EXPECT_EQ(rnk1.cardinality(A), 125000);
-	EXPECT_EQ(rnk1.cardinality(G), 125000);
-	EXPECT_EQ(rnk1.cardinality(C), 125000);
-	EXPECT_EQ(rnk1.cardinality(T), 125000);
+	EXPECT_EQ(rnk1.cardinality(A), 1250000);
+	EXPECT_EQ(rnk1.cardinality(G), 1250000);
+	EXPECT_EQ(rnk1.cardinality(C), 1250000);
+	EXPECT_EQ(rnk1.cardinality(T), 1250000);
 }
 
 TEST(Methods, cardinality) {
 	RNK rnk1;
-	for (int i = 0; i < 500000; i += 4) {
+	for (int i = 0; i < 5000000; i += 4) {
 		rnk1.push_back(A);
 		rnk1.push_back(G);
 		rnk1.push_back(C);
 		rnk1.push_back(T);
 	}
 
-
-
 	unordered_map<Nucleotide, size_t> map = rnk1.cardinality();
-	EXPECT_EQ(map[A], 125000);
-	EXPECT_EQ(map[G], 125000);
-	EXPECT_EQ(map[C], 125000);
-	EXPECT_EQ(map[T], 125000);
+	EXPECT_EQ(map[A], 1250000);
+	EXPECT_EQ(map[G], 1250000);
+	EXPECT_EQ(map[C], 1250000);
+	EXPECT_EQ(map[T], 1250000);
 }
 
-TEST(Operator, get_from_empty) {
+TEST(Operators, get_from_empty) {
 	RNK rnk;
 	for (int i = -2000; i < 2000; i++) {
 		EXPECT_ANY_THROW(rnk[i]);
@@ -209,7 +209,7 @@ TEST(Operator, get_from_empty) {
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
-
-	system("pause");
+	
+	std::system("pause");
 	return 0;
 }
