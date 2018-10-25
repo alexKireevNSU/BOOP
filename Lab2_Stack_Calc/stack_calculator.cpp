@@ -5,7 +5,10 @@ std::vector<double> stack;
 std::map<std::string, double> defs;
 using namespace stack_calculator;
 void Pop::doCalc() {
-	stack.pop_back();
+	if (stack.empty())
+		std::cout << "Stack is empty" << std::endl;
+	else
+		stack.pop_back();
 }
 void Push::doCalc() {
 	stack.push_back(num);
@@ -14,30 +17,48 @@ void Define::doCalc() {
 	defs[name] = num;
 }
 void Print::doCalc() {
-	std::cout << stack.back() << std::endl;
+	if (stack.empty())
+		std::cout << "Stack is empty" << std::endl;
+	else 
+		std::cout << stack.back() << std::endl;
 }
 void Plus::doCalc() {
-	double a = stack.back();
-	stack.pop_back();
-	stack.back() += a;
+	if (stack.size() < 2) std::cout << "Too few numbers in stack" << std::endl;
+	else {
+		double a = stack.back();
+		stack.pop_back();
+		stack.back() += a;
+	}
 }
 void Minus::doCalc() {
-	double a = stack.back();
-	stack.pop_back();
-	stack.back() = a - stack.back();
+	if (stack.size() < 2) std::cout << "Too few numbers in stack" << std::endl;
+	else {
+		double a = stack.back();
+		stack.pop_back();
+		stack.back() = a - stack.back();
+	}
 }
 void Mult::doCalc() {
-	double a = stack.back();
-	stack.pop_back();
-	stack.back() *= a;
+	if (stack.size() < 2) std::cout << "Too few numbers in stack" << std::endl;
+	else {
+		double a = stack.back();
+		stack.pop_back();
+		stack.back() *= a;
+	}
 }
 void Div::doCalc() {
-	double a = stack.back();
-	stack.pop_back();
-	stack.back() = a / stack.back();
+	if (stack.size() < 2) std::cout << "Too few numbers in stack" << std::endl;
+	else {
+		double a = stack.back();
+		stack.pop_back();
+		stack.back() = a / stack.back();
+	}
 }
 void Sqrt::doCalc() {
-	stack.back() = sqrt(stack.back());
+	if (stack.empty())
+		std::cout << "Stack is empty" << std::endl;
+	else
+		stack.back() = sqrt(stack.back());
 }
 
 Command* PopFactory::factoryMethod() { return new Pop(); }
@@ -50,6 +71,8 @@ Command* PushFactory::factoryMethod() {
 		for (const auto& p : defs) {
 			if (p.first == this->num) return new Push(p.second);
 		}
+		std::cout << "No such defined numbers" << std::endl;
+		return nullptr;
 	}
 	
 	return new Push(num);
@@ -160,13 +183,17 @@ void stack_calculator::calculate(FILE* input) {
 			c = nullptr;
 		}
 		if (strs[0] == "PUSH") {
-			if (strs.size() < 2) throw std::exception("not enough arguments for push");
-
+			if (strs.size() < 2) {
+				std::cout << "Not enough arguments for push" << std::endl;
+				continue;
+			}
 			PushFactory f(strs[1]);
 			Command* c = f.factoryMethod();
-			c->doCalc();
-			delete c;
-			c = nullptr;
+			if (c != nullptr) {
+				c->doCalc();
+				delete c;
+				c = nullptr;
+			}
 		}
 		if (strs[0] == "SQRT") {
 			SqrtFactory f;
@@ -183,12 +210,17 @@ void stack_calculator::calculate(FILE* input) {
 			c = nullptr;
 		}
 		if (strs[0] == "DEFINE") {
-			if (strs.size() < 3) throw std::exception("not enough arguments for define");
+			if (strs.size() < 3) {
+				std::cout << "Not enough arguments for define" << std::endl;
+				continue;
+			}
 			DefineFactory f(strs[1], strs[2]);
 			Command* c = f.factoryMethod();
-			c->doCalc();
-			delete c;
-			c = nullptr;
+			if (c != nullptr) {
+				c->doCalc();
+				delete c;
+				c = nullptr;
+			}
 		}
 	}
 }
