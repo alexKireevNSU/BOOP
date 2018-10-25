@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RNK_DNK_Lab", "RNK_DNK_Lab\RNK_DNK_Lab.vcxproj", "{93AD84A5-04E3-4DE5-A29B-9485C5002F34}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab2_Stack_Calc", "Lab2_Stack_Calc\Lab2_Stack_Calc.vcxproj", "{DD000940-7483-4DCE-A3E5-986F3FF2F31F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Google Unit Test", "Google Unit Test", "{1FF779EA-FC1D-4A5C-86C1-192BDA074AFD}"
+	ProjectSection(SolutionItems) = preProject
+		Google Unit Test\msvc\2010\gtest\Win32-Debug\gtestd.lib = Google Unit Test\msvc\2010\gtest\Win32-Debug\gtestd.lib
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{EF3080B1-FD4B-429F-A8F1-81D2EC0A6A4B}"
+	ProjectSection(SolutionItems) = preProject
+		Google Unit Test\include\gtest\gtest-death-test.h = Google Unit Test\include\gtest\gtest-death-test.h
+		Google Unit Test\include\gtest\gtest-message.h = Google Unit Test\include\gtest\gtest-message.h
+		Google Unit Test\include\gtest\gtest-param-test.h = Google Unit Test\include\gtest\gtest-param-test.h
+		Google Unit Test\include\gtest\gtest-param-test.h.pump = Google Unit Test\include\gtest\gtest-param-test.h.pump
+		Google Unit Test\include\gtest\gtest-printers.h = Google Unit Test\include\gtest\gtest-printers.h
+		Google Unit Test\include\gtest\gtest-spi.h = Google Unit Test\include\gtest\gtest-spi.h
+		Google Unit Test\include\gtest\gtest-test-part.h = Google Unit Test\include\gtest\gtest-test-part.h
+		Google Unit Test\include\gtest\gtest-typed-test.h = Google Unit Test\include\gtest\gtest-typed-test.h
+		Google Unit Test\include\gtest\gtest.h = Google Unit Test\include\gtest\gtest.h
+		Google Unit Test\include\gtest\gtest_pred_impl.h = Google Unit Test\include\gtest\gtest_pred_impl.h
+		Google Unit Test\include\gtest\gtest_prod.h = Google Unit Test\include\gtest\gtest_prod.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Debug|x64.ActiveCfg = Debug|x64
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Debug|x64.Build.0 = Debug|x64
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Debug|x86.ActiveCfg = Debug|Win32
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Debug|x86.Build.0 = Debug|Win32
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Release|x64.ActiveCfg = Release|x64
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Release|x64.Build.0 = Release|x64
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Release|x86.ActiveCfg = Release|Win32
+		{93AD84A5-04E3-4DE5-A29B-9485C5002F34}.Release|x86.Build.0 = Release|Win32
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Debug|x64.ActiveCfg = Debug|x64
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Debug|x64.Build.0 = Debug|x64
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Debug|x86.Build.0 = Debug|Win32
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Release|x64.ActiveCfg = Release|x64
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Release|x64.Build.0 = Release|x64
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Release|x86.ActiveCfg = Release|Win32
+		{DD000940-7483-4DCE-A3E5-986F3FF2F31F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF3080B1-FD4B-429F-A8F1-81D2EC0A6A4B} = {1FF779EA-FC1D-4A5C-86C1-192BDA074AFD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0133AFF8-9C92-4A90-9042-B121D162D407}
+	EndGlobalSection
+EndGlobal

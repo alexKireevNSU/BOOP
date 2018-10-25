@@ -234,8 +234,6 @@ biology_lib::RNK::RNK(const RNK& rnk) {
 	this->length = rnk.length;
 	this->chain_length = (rnk.chain_length);
 	size_t* chain_t = new size_t[rnk.chain_length];
-
-	//size_t* chain_t = new size_t[this->chain_length];
 	for (auto i = 0; i < rnk.chain_length; i++) {
 		chain_t[i] = 0;
 	}
@@ -287,4 +285,33 @@ bool biology_lib::RNK::is_complimentary(RNK& r) {
 		}
 	}
 	return result || reversed_result;
+}
+
+biology_lib::RNK biology_lib::RNK::operator+(const RNK& r) {
+	RNK result_rnk(*this);
+	for (auto i = 0; i < r.get_length(); i++) {
+		result_rnk.push_back((Nucleotide)r[i]);
+	}
+	return result_rnk;
+};
+
+void biology_lib::RNK::resize_chain() {
+	if (!this->chain) {
+		this->chain = new size_t[1];
+		this->chain[0] = 0;
+		this->length = 1;
+		this->chain_length = 1;
+		return;
+	}
+	else {
+		size_t *new_chain = new size_t[this->chain_length * 2];
+		for (auto i = 0; i < this->chain_length * 2; ++i)
+			new_chain[i] = 0;
+		for (auto i = 0; i < this->chain_length; i++) {
+			new_chain[i] = this->chain[i];
+		}
+		delete[] this->chain;
+		this->chain = new_chain;
+		this->chain_length = this->chain_length * 2;
+	}
 }

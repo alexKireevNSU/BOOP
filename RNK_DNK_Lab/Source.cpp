@@ -5,7 +5,8 @@
 #include <gtest/gtest.h>
 using namespace std;
 using namespace biology_lib;
-TEST(Mem, push_back) {
+
+TEST(Mem, mem_test) {
 
 	_CrtMemState stady1 = { 0 };
 	_CrtMemState stady2 = { 0 };
@@ -19,6 +20,7 @@ TEST(Mem, push_back) {
 		rnk1->push_back(T);
 	}
 	RNK* rnk3 = new RNK((*rnk) + *rnk1);
+	rnk3->reverse();
 	delete rnk;
 	delete rnk1;
 	delete rnk3;
@@ -209,6 +211,7 @@ TEST(Operators, get_from_empty) {
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
+	const RNK rnk(1, A);
 	
 	std::system("pause");
 	return 0;
