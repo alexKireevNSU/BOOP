@@ -1,4 +1,5 @@
 #include <iostream>
+#define DEV_STAGE
 using namespace std;
 
 void calculate(FILE* input) {
@@ -22,6 +23,20 @@ void calculate() {
 }
 
 int main(int argc, char** argv) {
+#ifdef DEV_STAGE
+	FILE* input;
+	errno_t err = fopen_s(&input,
+			"C:\
+			Users\
+			goodaman\source\
+			repos\BOOP\Lab2_Stack_Calc\in.txt",
+			"r");
+	if (err != 0) {
+		std::cout << "error\n" << err;
+		return 0;
+	}
+		calculate(input);
+#else
 	if (argc > 1) {
 		FILE* input;
 		errno_t err = fopen_s(&input, argv[1], "r");
@@ -30,10 +45,13 @@ int main(int argc, char** argv) {
 			return 0;
 		}
 		calculate(input);
-	}
+}
 	else {
 		cout << "lold";
 	}
+#endif
+
+	
 	system("pause");
 	return 0;
 }
