@@ -118,34 +118,38 @@ std::vector<std::string> stack_calculator::split_string(char* str) {
 	}
 	return strs;
 }
-std::vector<std::string> stack_calculator::split_string(std::string str) {
-	std::vector<std::string> strs;
-	if (str.empty()) return strs;
-	for (size_t j = 0; j < str.length() + 1; j++) {
-		std::string str_t;
-		for (size_t i = j; i < str.length() + 1; i++) {
-			if (str[i] == '\0' || str[i] == '\n') {
-				strs.push_back(str_t);
-				return strs;
-			}
-			if (str[i] != ' ')
-				str_t.push_back(str[i]);
-			else {
-				j = i;
-				break;
-			}
-		}
-		strs.push_back(str_t);
-	}
-	return strs;
-}
+//std::vector<std::string> stack_calculator::split_string(std::string str) {
+//	std::vector<std::string> strs;
+//	if (str.empty()) return strs;
+//	for (size_t j = 0; j < str.length() + 1; j++) {
+//		std::string str_t;
+//		for (size_t i = j; i < str.length() + 1; i++) {
+//			if (str[i] == '\0' || str[i] == '\n') {
+//				strs.push_back(str_t);
+//				return strs;
+//			}
+//			if (str[i] != ' ')
+//				str_t.push_back(str[i]);
+//			else {
+//				j = i;
+//				break;
+//			}
+//		}
+//		strs.push_back(str_t);
+//	}
+//	return strs;
+//}
 
 void stack_calculator::calculate(FILE* input) {
 	if (input == stdin) std::cout << "Print EXIT to exit from calculator" << std::endl;
+	
 	while (!feof(input)) {
 		char buff[100];
 		char* str = fgets(buff, 100, input);
+		if (str == nullptr) continue;
+		if (str[0] == '#') continue;
 		std::vector<std::string> strs = split_string(str);
+		if (strs.empty()) continue;
 		if (strs[0] == "EXIT") return;
 		if (strs[0] == "+") {
 			PlusFactory f;
@@ -300,3 +304,18 @@ void stack_calculator::calculate(FILE* input) {
 //		}
 //	}
 //}
+
+
+bool stack_calculator::stack_is_empty() {
+	return stack.empty();
+}
+bool stack_calculator::defs_is_empty() {
+	return defs.empty();
+}
+
+std::vector<double> stack_calculator::get_stack() {
+	return stack;
+}
+std::map<std::string, double> stack_calculator::get_defs() {
+	return defs;
+}

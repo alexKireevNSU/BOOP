@@ -104,7 +104,13 @@ namespace stack_calculator {
 	};
 
 	std::vector<std::string> split_string(char* str);
-	std::vector<std::string> split_string(std::string str);
+	//std::vector<std::string> split_string(std::string str);
 	void calculate(FILE* input);
 	//void calculate();
+
+
+	bool stack_is_empty();
+	bool defs_is_empty();
+	std::vector<double> get_stack();
+	std::map<std::string, double> get_defs();
 }
