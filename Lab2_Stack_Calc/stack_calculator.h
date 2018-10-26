@@ -1,10 +1,12 @@
 #pragma once
 #include<vector>
 #include<iostream>
-#include<map>
+#include<unordered_map>
 #include<string>
 #include<math.h>
 namespace stack_calculator {
+	class CommandException : public std::exception {};
+
 	class Command {
 	public:
 		virtual void doCalc() = 0;
@@ -112,5 +114,7 @@ namespace stack_calculator {
 	bool stack_is_empty();
 	bool defs_is_empty();
 	std::vector<double> get_stack();
-	std::map<std::string, double> get_defs();
+	std::unordered_map<std::string, double> get_defs();
+	void clear_stack();
+	void clear_defs();
 }

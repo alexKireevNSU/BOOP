@@ -1,8 +1,9 @@
 #include"stack_calculator.h"
 #include <exception>
+#include <unordered_map>
 #include <string>
 std::vector<double> stack;
-std::map<std::string, double> defs;
+std::unordered_map<std::string, double> defs;
 using namespace stack_calculator;
 void Pop::doCalc() {
 	if (stack.empty())
@@ -151,7 +152,7 @@ void stack_calculator::calculate(FILE* input) {
 		std::vector<std::string> strs = split_string(str);
 		if (strs.empty()) continue;
 		if (strs[0] == "EXIT") return;
-		if (strs[0] == "+") {
+		if (strs[0] == "+") { // shared ptr, hash unordered_unordered_map
 			PlusFactory f;
 			Command* c = f.factoryMethod();
 			c->doCalc();
@@ -227,6 +228,8 @@ void stack_calculator::calculate(FILE* input) {
 			}
 		}
 	}
+	//stack.clear();
+	//defs.clear();
 }
 //void stack_calculator::calculate() {
 //	std::cout << "Print STOP to stop the process" << std::endl;
@@ -316,6 +319,12 @@ bool stack_calculator::defs_is_empty() {
 std::vector<double> stack_calculator::get_stack() {
 	return stack;
 }
-std::map<std::string, double> stack_calculator::get_defs() {
+std::unordered_map<std::string, double> stack_calculator::get_defs() {
 	return defs;
+}
+void stack_calculator::clear_stack() {
+	stack.clear();
+}
+void stack_calculator::clear_defs() {
+	defs.clear();
 }

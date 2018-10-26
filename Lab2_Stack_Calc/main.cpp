@@ -72,7 +72,9 @@ TEST(Operations, POP) {
 	EXPECT_TRUE(get_stack().empty());
 }
 TEST(Operations, DEFINE) {
-
+	clear_defs();
+	clear_stack();
+	
 }
 TEST(Operations, PLUS) {
 

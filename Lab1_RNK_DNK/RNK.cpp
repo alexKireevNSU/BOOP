@@ -175,13 +175,13 @@ size_t biology_lib::RNK::cardinality(Nucleotide N) {
 	return counter;
 }
 
-std::unordered_map<biology_lib::Nucleotide, size_t> biology_lib::RNK::cardinality() {
-	std::unordered_map<Nucleotide, size_t> map;
-	map[A] = cardinality(A);
-	map[G] = cardinality(G);
-	map[C] = cardinality(C);
-	map[T] = cardinality(T);
-	return map;
+std::unordered_unordered_unordered_map<biology_lib::Nucleotide, size_t> biology_lib::RNK::cardinality() {
+	std::unordered_unordered_unordered_map<Nucleotide, size_t> unordered_unordered_map;
+	unordered_unordered_map[A] = cardinality(A);
+	unordered_unordered_map[G] = cardinality(G);
+	unordered_unordered_map[C] = cardinality(C);
+	unordered_unordered_map[T] = cardinality(T);
+	return unordered_unordered_map;
 }
 
 const biology_lib::RNK::Iterator biology_lib::RNK::operator[](size_t i) const {
