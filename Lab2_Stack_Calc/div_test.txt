@@ -1,0 +1,201 @@
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 10
+PUSH 1.e+100
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
